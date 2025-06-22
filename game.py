@@ -1,7 +1,8 @@
-from board import *
+from game_board import create_board, drop_piece, is_valid_location, check_win
 from ai_minimax import minimax
 from logger import create_logger, log_move
 import math
+from constants import ROWS, COLUMNS, EMPTY
 
 PLAYER = 1
 AI = 2

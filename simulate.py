@@ -1,7 +1,7 @@
 # simulate.py
 import random
 import time
-from board import create_board, drop_piece, is_valid_location, get_valid_locations, check_win, AI, PLAYER
+from game_board import create_board, drop_piece, is_valid_location, get_valid_locations, check_win, AI, PLAYER
 from ai_minimax import minimax
 
 

@@ -1,54 +1,55 @@
-# Step 1: Enhance ai_minimax.py with timing support
+# ai_minimax.py
 
-import time
 import math
-from board import get_valid_locations, is_valid_location, drop_piece, check_win, copy_board, AI
-
-# Scoring function should be in evaluation.py
+import random
+from constants import PLAYER, AI
+from game_board import get_valid_locations, drop_piece, check_win
 from evaluation import score_position
 
+def is_terminal_node(board):
+    return check_win(board, PLAYER) or check_win(board, AI) or len(get_valid_locations(board)) == 0
+
 def minimax(board, depth, alpha, beta, maximizingPlayer):
-    start_time = time.time()
     valid_locations = get_valid_locations(board)
-    is_terminal = check_win(board, 1) or check_win(board, 2) or len(valid_locations) == 0
+    is_terminal = is_terminal_node(board)
 
     if depth == 0 or is_terminal:
         if is_terminal:
             if check_win(board, AI):
-                return (None, 100000000000000), time.time() - start_time
-            elif check_win(board, 1):
-                return (None, -10000000000000), time.time() - start_time
-            else:  # Game is over, no more valid moves
-                return (None, 0), time.time() - start_time
-        else:  # Depth is zero
-            return (None, score_position(board, AI)), time.time() - start_time
+                return (None, float('inf'))
+            elif check_win(board, PLAYER):
+                return (None, -float('inf'))
+            else:
+                return (None, 0)
+        else:
+            return (None, score_position(board, AI))
 
     if maximizingPlayer:
         value = -math.inf
-        best_col = valid_locations[0]
+        best_col = random.choice(valid_locations)
         for col in valid_locations:
-            b_copy = copy_board(board)
-            drop_piece(b_copy, col, AI)
-            new_score, _ = minimax(b_copy, depth-1, alpha, beta, False)
+            temp_board = [row[:] for row in board]
+            drop_piece(temp_board, col, AI)
+            new_score = minimax(temp_board, depth-1, alpha, beta, False)[1]
             if new_score > value:
                 value = new_score
                 best_col = col
             alpha = max(alpha, value)
             if alpha >= beta:
                 break
-        return best_col, time.time() - start_time
+        return best_col, value
 
-    else:  # Minimizing player
+    else:
         value = math.inf
-        best_col = valid_locations[0]
+        best_col = random.choice(valid_locations)
         for col in valid_locations:
-            b_copy = copy_board(board)
-            drop_piece(b_copy, col, 1)
-            new_score, _ = minimax(b_copy, depth-1, alpha, beta, True)
+            temp_board = [row[:] for row in board]
+            drop_piece(temp_board, col, PLAYER)
+            new_score = minimax(temp_board, depth-1, alpha, beta, True)[1]
             if new_score < value:
                 value = new_score
                 best_col = col
             beta = min(beta, value)
             if alpha >= beta:
                 break
-        return best_col, time.time() - start_time
+        return best_col, value
