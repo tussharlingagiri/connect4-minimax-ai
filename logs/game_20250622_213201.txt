@@ -1,0 +1,25 @@
+Player 1   -> Column 3
+AI         -> Column 2
+Player 1   -> Column 4
+AI         -> Column 3
+Player 1   -> Column 5
+AI         -> Column 6
+Player 1   -> Column 6
+AI         -> Column 3
+Player 1   -> Column 5
+AI         -> Column 2
+Player 1   -> Column 3
+AI         -> Column 2
+Player 1   -> Column 2
+AI         -> Column 5
+Player 1   -> Column 3
+AI         -> Column 5
+Player 1   -> Column 4
+AI         -> Column 1
+Player 1   -> Column 5
+AI         -> Column 0
+Player 1   -> Column 1
+AI         -> Column 0
+Player 1   -> Column 2
+AI         -> Column 4
+🤖 AI WINS!
